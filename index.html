@@ -158,6 +158,10 @@ footer{color:var(--muted);font-size:12px;margin-top:16px}
       <option value="page">Página</option>
       <option value="horizontal">Horizontal</option>
     </select>
+    <select id="viewSel" aria-label="Qué mostrar">
+      <option value="tab">Solo tablatura</option>
+      <option value="both">Tab + partitura</option>
+    </select>
   </div>
 </div>
 
@@ -206,7 +210,7 @@ footer{color:var(--muted);font-size:12px;margin-top:16px}
   // ---- alphaTab ----
   var settings = {
     core:{fontDirectory:CDN+"font/", file:null},
-    display:{layoutMode:alphaTab.LayoutMode.Page, scale:1.0},
+    display:{layoutMode:alphaTab.LayoutMode.Page, scale:1.0, staveProfile:alphaTab.StaveProfile.Tab},
     player:{
       enablePlayer:true,
       enableCursor:true,
@@ -329,6 +333,11 @@ footer{color:var(--muted);font-size:12px;margin-top:16px}
   });
   $("layoutSel").addEventListener("change",function(){
     api.settings.display.layoutMode = this.value==="horizontal" ? alphaTab.LayoutMode.Horizontal : alphaTab.LayoutMode.Page;
+    api.updateSettings();api.render();
+  });
+
+  $("viewSel").addEventListener("change",function(){
+    api.settings.display.staveProfile = this.value==="tab" ? alphaTab.StaveProfile.Tab : alphaTab.StaveProfile.ScoreTab;
     api.updateSettings();api.render();
   });
 
